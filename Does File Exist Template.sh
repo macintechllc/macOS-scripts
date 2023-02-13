@@ -10,7 +10,7 @@ flag="$5"
 FILENAME="$6"
 
 
-if [ $5 "$FILE" ];then
+if [ $flag "$FILE" ];then
 	echo "$FILENAME exists."
 	## ENTER ANY COMMANDS YOU WANT RUN HERE IF THE FILE EXISTS ##
 else
