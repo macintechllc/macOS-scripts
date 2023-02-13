@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## Here is a basic template for checking if a file exists. Inspo from Linuxize.com ##
+## For more intensive does file exist options check out https://linuxize.com/post/bash-check-if-file-exists/ ###
+
+
 ## Variables ####
 ## flag -d for directory ###
 ## flag -e for any file regardless of type ## 
