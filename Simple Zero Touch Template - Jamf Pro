@@ -1,0 +1,45 @@
+#!/bin/bash
+
+## This is a template for installing all necessary applications and settings for your standard Mac deployments ##
+## Created by Macintech LLC on February 21,2023 ##
+
+## Fill out the different variables below to create your Zero Touch deployment script. Look for ALL CAPS ITEMS TO FILL OUT ## 
+
+## Variables to fill out ##
+
+companyname="INSERT COMPANY NAME HERE"
+policies=( 
+  "ADD-CUSTOM-TRIGGER" 
+  "EXAMPLE-INSTALL-ROSETTA-2" 
+  "CONTINUE-ADDING-ALL-POLICIES" 
+)
+
+## Other Variables ###
+
+setupcomplete=/Library/Application\ Support/"$companyname"/Mac-Setup-Complete/
+
+----------------------------------------------------------------------------------------------
+
+## Verify receipt is not already installed. If it is installed, abort zero touch setup ##
+
+  if [ -e "$setupcomplete" ]; then
+    echo "Receipt already installed, exiting zero touch setup."
+    exit 1
+  fi
+done
+
+## Install all Jamf Pro policies listed ##
+
+echo "Ready to install all Jamf Pro policies"
+
+for policy in "${policies[@]}"; do
+  jamf policy -trigger "${policy}"
+  echo "Jamf Pro policies complete"
+done
+
+## Create "Mac-Setup-Complete" receipt in custom company name folder ##
+  echo "Creating Mac-Setup-Complete receipt"
+  /bin/mkdir -p  "$setupcomplete"
+done
+
+exit 0
