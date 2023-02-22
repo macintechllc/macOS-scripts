@@ -1,0 +1,26 @@
+#!/bin/bash
+
+## Created by Macintech Solutions February 21,2023 ##
+## Designed to rename the computer to the serial number and assign the logged in user information to User & Location in Jamf Pro inventory ##
+
+serialNumber=$(system_profiler SPHardwareataType | awk '/Serial/ {print $4}')
+loggedinuser=$(echo "show State:/Users/ConsoleUser" | scutil | awk '/Name :/ && ! /loginwindow/ { print $3 }')
+fullname=$(dscl . -read /Users/$loggedinuser RealName )
+useremail="$loggedinuser@COPMANYNAME.COM"
+
+## Rename Computer to Serial Number ##
+
+jamf setComputerName -name $serialnumber
+
+## Assign Mac to currently logged in user only if an end user is logged in ##
+
+if [ "$loggedinuser" != "" ]; then
+	sudo jamf recon -endUsername "$loggedinuser" -realname "$fullname" -email "$useremail"
+else
+	echo "No user logged in. Adding UNASSIGNED tag"
+	sudo jamf recon -endUsername "UNASSIGNED" -realname "UNASSIGNED" -email "UNASSIGNED"
+fi
+
+sudo jamf recon
+
+exit 0
