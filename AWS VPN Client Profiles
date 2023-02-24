@@ -2,12 +2,7 @@
 
 ## Created by Macintech Solutions on February 23,2023 ##
 ## Look for ALL CAPS OPTIONS TO REPLACE WITH YOUR COMPANY BUILD ##
-
-## Pre-requisite. You will need to create a DMG file using an app like Composer to install your VPN profiles ##
-## These files will be stored in /Users/$loggedInUser/.config/AWSVPNClient/OpenVpnConfigs/ ##
-## The VPN profiles will need the following permissions - 646 ##
-## Root - Read,Write ## Admin - Read ## Everyone - Read,Write $$ ##
-## Install the AWS VPN Client, the DMG with the VPN profiles, and then run the script below ##
+## Reference the wiki for more detailed instructions on installing AWS VPN Client Profiles ##
 
 ## Quit AWS VPN Clint ##
 osascript -e 'quit app "AWS VPN Client.app"'
