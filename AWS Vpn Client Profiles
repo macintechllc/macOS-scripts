@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## Created by Macintech Solutions on February 23,2023 ##
+## Look for ALL CAPS OPTIONS TO REPLACE WITH YOUR COMPANY BUILD ##
+
+## Pre-requisite. You will need to create a DMG file using an app like Composer to install your VPN profiles ##
+## These files will be stored in /Users/$loggedInUser/.config/AWSVPNClient/OpenVpnConfigs/ ##
+## The VPN profiles will need the following permissions - 646 ##
+## Root - Read,Write ## Admin - Read ## Everyone - Read,Write $$ ##
+## Install the AWS VPN Client, the DMG with the VPN profiles, and then run the script below ##
+
+## Quit AWS VPN Clint ##
+osascript -e 'quit app "AWS VPN Client.app"'
+
+wait 10
+
+## Find the logged in user ##
+loggedInUser=$(stat -f %Su /dev/console)
+
+## Set the file path to the ConnectionProfiles file with the loggedIn user ##
+connectionProfiles="/Users/$loggedInUser/.config/AWSVPNClient/ConnectionProfiles"
+
+## If directory not there create it. ##
+mkdir -p "/Users/$loggedInUser/.config/AWSVPNClient/OpenVpnConfigs"
+
+## Create the Connection Profiles File ##
+cat <<EOF > "$connectionProfiles"
+{"Version":"1","LastSelectedProfileIndex":2,"ConnectionProfiles":[{"ProfileName":"INSERT PROFILE NAME HERE","OvpnConfigFilePath":"/Users/$loggedInUser/.config/AWSVPNClient/OpenVpnConfigs/PROFILE NAME HERE","CvpnEndpointId":"cvpn-endpoint-NDPOINTxNUMBER","CvpnEndpointRegion":"INSERT REGION HERE","CompatibilityVersion":"1 OR 2","FederatedAuthType":0 OR 1}]}
+EOF
+
+## Resolve permissions ## 
+
+chown "$loggedInUser" "$connectionProfiles"
+chown "$loggedInUser" "/Users/$loggedInUser/.config/"
