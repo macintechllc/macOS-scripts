@@ -1,0 +1,25 @@
+#!/bin/bash
+
+## Created by Macintech LLC March 16,2023 ##
+
+ssid="ENTER SSID NAME HERE"
+
+## Get list of the current preferred network list to get a baseline ##
+
+networklistpre=$(networksetup -listpreferredwirelessnetworks en0)
+
+echo $networklistpre
+
+## Remove the network and add back as the highest priority on the preferred network ##
+## This is a one time add and does not enforce the highest priority which is a constant changing list ##
+## For the network security type use the reference below and replace WPA2 if using a different security type
+## WPA for WPA Personal, WPAE for WPA Enterprise, WPA2 for WPA2 Personal, WPA2E for WPA2 Enterprise, WEP for plain WEP, and 8021XWEP for 802.1X WEP ##
+
+networksetup -removepreferredwirelessnetwork en0 "$ssid"
+networksetup -addpreferredwirelessnetworkatindex en0 "$ssid" 0 WPA2E
+
+## Get the updated preferred network list ##
+
+networklistpost=$(networksetup -listpreferredwirelessnetworks en0)
+
+echo $networklistpost
