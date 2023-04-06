@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Get current loggged user
+user=$(echo "show State:/Users/ConsoleUser" | scutil | awk '/Name :/ && ! /loginwindow { print $3 }')
+
+## Change Directory to /tmp ##
+cd /tmp
+
+## Download latest version of Slack dmg ##
+curl -L "https://slack.com/ssb/download-osx-universal" -o slack.dmg
+
+## Mount the Slack disk image ##
+hdiutil mount -nobrowse /tmp/slack.dmg
+
+## Copy Slack to the local user Applications folder ##
+cp -rf /Volumes/Slack/Slack.app ~/Applications/
+
+## Adjust permissions to local user ##
+chown $user ~/Applications/Slack.app
+
+## Unmount and delete the disk image ##
+hdiutil detach /Volumes/Slack
+
+## Delete the dmg from the tmp folder ##
+rm /tmp/slack.dmg
