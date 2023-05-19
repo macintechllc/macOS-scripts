@@ -7,7 +7,7 @@
 ## Quit AWS VPN Clint ##
 osascript -e 'quit app "AWS VPN Client.app"'
 
-wait 10
+sleep 10
 
 ## Find the logged in user ##
 loggedInUser=$(stat -f %Su /dev/console)
